@@ -5,76 +5,77 @@ BLUE = (36, 123, 160)
 WHITE = (248, 244, 249)
 YELLOW = (255, 249, 79)
 
-scores = {YELLOW: 1,
-          BLUE: -1}
+scores = {YELLOW: 200,
+          BLUE: -10000}
 '''
 El problema esta en que al realizar la funcion minmax no devuelve un tablero "position"
 '''
 
-def bestMove(position, depth, game):
-    bestScore = -1000
+def bestMove(position, depth, game, color):
+    bestScore = float('-inf')
     best_move = None
-    for move in get_all_moves(position, WHITE, game):
-        evaluation = minimax(move, depth, True, WHITE, game)
+    swaped = {YELLOW: WHITE, WHITE: YELLOW}
+    for move in get_all_moves(position, color, game):
+        evaluation = minimax(move, depth, True, swaped[color], game)
         score = evaluation[0]
-        print("El puntaje fue: "+str(score))
+        #print("El puntaje fue: "+str(score))
         #score = move.evaluate()
         if score > bestScore:
             bestScore = score
             best_move = move
     return best_move
 def minimax(position, depth, max_player, color, game):
-    result = game.winner2()
-    # if (result != None):
-    #     return scores[result], position
-    if depth == 2:
-        print("Tablero score: "+str(position.evaluate()))
+    result = game.isWinning()
+    if (result != None):
+        return scores[result], position
+    if depth == 3:
+        #print("Tablero score: "+str(position.evaluate()))
         return position.evaluate(), position
     if max_player == True:
-        print('max player: YELLOW')
+        #print('max player: YELLOW')
         if color == WHITE:
-            minEval = float('inf')
+            maxEval = float('-inf')
             best_move = None
             for move in get_all_moves(position, WHITE, game):
                 score = minimax(move, depth + 1, True, YELLOW, game)[0]
                 print("El puntaje del score es: "+str(score))
-                if score < minEval:
-                    minEval = score
+                if score > maxEval:
+                    maxEval = score
                     best_move = move
                 # minEval = min(minEval, evaluation)
                 # if minEval == evaluation:
                 #     best_move = move
-            return minEval, best_move
+            return maxEval, best_move
         if color == YELLOW:
-            minEval = float('inf')
+            maxEval = float('-inf')
             best_move = None
             for move in get_all_moves(position, YELLOW, game):
                 score = minimax(move, depth + 1, False, WHITE, game)[0]
+                if score > maxEval:
+                    maxEval = score
+                    best_move = move
+            return maxEval, best_move
+
+    else:
+        if color == WHITE:
+            #print('min player: BLUE')
+            minEval = float('inf')
+            best_move = None
+            for move in get_all_moves(position, WHITE, game):
+                score = minimax(move, depth + 1, False, BLUE, game)[0]
                 if score < minEval:
                     minEval = score
                     best_move = move
             return minEval, best_move
-
-    else:
-        if color == WHITE:
-            print('min player: BLUE')
-            maxEval = float('-inf')
-            best_move = None
-            for move in get_all_moves(position, WHITE, game):
-                score = minimax(move, depth + 1, False, BLUE, game)[0]
-                if score < maxEval:
-                    maxEval = score
-                    best_move = move
-            return maxEval, best_move
         if color == BLUE:
-            maxEval = float('-inf')
+            minEval = float('inf')
             best_move = None
             for move in get_all_moves(position, BLUE, game):
                 score = minimax(move, depth + 1, True, WHITE, game)[0]
-                if score < maxEval:
-                    maxEval = score
+                if score < minEval:
+                    minEval = score
                     best_move = move
-            return maxEval, best_move
+            return minEval, best_move
 
 
 def get_all_moves(board, color, game):

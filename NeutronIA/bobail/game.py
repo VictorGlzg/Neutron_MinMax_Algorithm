@@ -42,6 +42,19 @@ class Game:
                         return BLUE
         return None
 
+    def isWinning(self):
+        for row in range(ROWS):
+            for col in range(COLS):
+                piece = self.board.get_piece(row, col)
+                if piece != 0 and self.turn == WHITE and self.selected and self.valid_moves == []:
+                    if row == 0:
+                        print('Yellow wins!')
+                        return YELLOW
+                    if row == 4:
+                        print('Blue wins!')
+                        return BLUE
+        return None
+
 
     def draw_selectable(self, win):
         for row in range(ROWS):

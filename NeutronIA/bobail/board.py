@@ -20,11 +20,11 @@ class Board:
 
     def evaluate(self):
         values={
-            0: 1000,
-            1 : 5,
-            2 : 3,
-            3 : 0,
-            4 : -1000
+            0: 100,
+            1: 50,
+            2: 30,
+            3: 20,
+            4: -10000
         }
         for row in range(ROWS):
             for col in range(COLS):

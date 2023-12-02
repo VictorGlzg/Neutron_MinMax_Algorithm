@@ -1,5 +1,5 @@
 import pygame
-from bobail.constants import WIDTH, HEIGHT, SQUARE_SIZE
+from bobail.constants import WIDTH, HEIGHT, SQUARE_SIZE,WHITE, YELLOW
 from minimax import bestMove
 from bobail.game import Game
 
@@ -29,16 +29,20 @@ def main():
         if game.ai_turn is True:
             if test:
                 #value, new_board = minimax(game.get_board(), 3, True, game.turn, game)
-                new_board = bestMove(game.get_board(), 0, game)
+                new_board = bestMove(game.get_board(), 0, game, WHITE)
                 game.board = new_board
                 game.ai_move()
-                test = False
+                new_board = bestMove(game.get_board(), 0, game, YELLOW)
+                game.board = new_board
+                game.ai_move()
+                game.ai_turn = False
                 # print(value)
                 # # print(game.ai_turn)
                 # print(type(new_board))
 
-        # if game.winner() != None:
-        #     run = False
+        if game.winner() != None:
+            print('Hola')
+            #run = False
         #
         # if game.winner2() != None:
         #     run = False
