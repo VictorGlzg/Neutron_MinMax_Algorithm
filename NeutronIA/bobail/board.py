@@ -2,8 +2,6 @@ import pygame
 from bobail.constants import COLS, ROWS, YELLOW, BLUE, BROWN, WHITE, BLACK, SQUARE_SIZE
 from bobail.piece import Piece
 
-
-
 class Board:
     def __init__(self):
         self.board = []
@@ -21,11 +19,18 @@ class Board:
                 pygame.draw.circle(win, BLACK, (x, y), radius)
 
     def evaluate(self):
+        values={
+            0: 1000,
+            1 : 5,
+            2 : 3,
+            3 : 0,
+            4 : -1000
+        }
         for row in range(ROWS):
             for col in range(COLS):
                 piece = self.get_piece(row, col)
                 if piece != 0 and piece.color == WHITE:
-                    return row
+                    return values[row]
 
     def evaluate2(self):
         for row in range(ROWS):
