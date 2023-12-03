@@ -25,10 +25,10 @@ def bestMove(position, depth, game, color):
             best_move = move
     return best_move
 def minimax(position, depth, max_player, color, game):
-    result = game.isWinning()
-    if (result != None):
-        return scores[result], position
-    if depth == 3:
+    # result = game.isWinning()
+    # if (result != None):
+    #     return scores[result], position
+    if depth == 4:
         #print("Tablero score: "+str(position.evaluate()))
         return position.evaluate(), position
     if max_player == True:
@@ -38,13 +38,10 @@ def minimax(position, depth, max_player, color, game):
             best_move = None
             for move in get_all_moves(position, WHITE, game):
                 score = minimax(move, depth + 1, True, YELLOW, game)[0]
-                print("El puntaje del score es: "+str(score))
+                #print("El puntaje del score es: "+str(score))
                 if score > maxEval:
                     maxEval = score
                     best_move = move
-                # minEval = min(minEval, evaluation)
-                # if minEval == evaluation:
-                #     best_move = move
             return maxEval, best_move
         if color == YELLOW:
             maxEval = float('-inf')
