@@ -11,24 +11,22 @@ scores = {YELLOW: 200,
 El problema esta en que al realizar la funcion minmax no devuelve un tablero "position"
 '''
 
-def bestMove(position, depth, game, color):
+def bestMove(position, depth, game):
     bestScore = float('-inf')
     best_move = None
-    swaped = {YELLOW: WHITE, WHITE: YELLOW}
-    for move in get_all_moves(position, color, game):
-        evaluation = minimax(move, depth, True, swaped[color], game)
+    for move in get_all_moves(position, WHITE, game):
+        evaluation = minimax(move, depth, True, YELLOW, game)
         score = evaluation[0]
-        #print("El puntaje fue: "+str(score))
-        #score = move.evaluate()
+        board = evaluation[1]
         if score > bestScore:
             bestScore = score
-            best_move = move
+            best_move = board
     return best_move
 def minimax(position, depth, max_player, color, game):
-    # result = game.isWinning()
-    # if (result != None):
-    #     return scores[result], position
-    if depth == 4:
+    result = game.isWinning()
+    if (result != None):
+         return scores[result], position
+    if depth == 3:
         #print("Tablero score: "+str(position.evaluate()))
         return position.evaluate(), position
     if max_player == True:

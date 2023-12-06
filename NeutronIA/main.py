@@ -28,13 +28,13 @@ def main():
 
         if game.ai_turn is True:
             if test:
-                #value, new_board = minimax(game.get_board(), 3, True, game.turn, game)
-                new_board = bestMove(game.get_board(), 0, game, WHITE)
+                new_board = bestMove(game.get_board(), 0, game)
                 game.board = new_board
+                game.ai_turn = YELLOW
                 game.ai_move()
-                new_board = bestMove(game.get_board(), 0, game, YELLOW)
-                game.board = new_board
-                game.ai_move()
+                # new_board = bestMove(game.get_board(), 0, game, YELLOW)
+                # game.board = new_board
+                # game.ai_move()
                 game.ai_turn = False
                 # print(value)
                 # # print(game.ai_turn)
